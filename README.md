@@ -1,4 +1,8 @@
-## I dont implement endDate in HeavenlyTours cause:
+# I didn't implement endDate in HeavenlyTours 
+Cause there is not enough data about the way.
+and online-searching is not good way to implement it.
+
+## If we want to implementing it:
 In the current setup, the Heavenly Tours API requires multiple requests to fetch tours based on startDate and endDate. Therefore, we will implement a short-polling structure with a new endpoint called /result.
 
 ## Search Process
