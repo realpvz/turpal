@@ -1,55 +1,18 @@
-# Turpal - Technical Challenge
+## I dont implement endDate in HeavenlyTours cause:
+In the current setup, the Heavenly Tours API requires multiple requests to fetch tours based on startDate and endDate. Therefore, we will implement a short-polling structure with a new endpoint called /result.
 
-## Description
+## Search Process
+1. Search Request:
+   - When a customer initiates a search, we will retrieve all online search providers.
+   Simultaneously, we will dispatch an event for offline search providers.
+     
+2. Event Handling:
+   - In a queue listener, we will send requests to the Heavenly Tours API for startDate until endDate and get products save into the some database.
+   
+3. Result Retrieval:
+    - On the client side, users will periodically request the /result endpoint until the is_finished key in the response is set to true.
 
-Imagine you are working for a travel company called _Travello_.
-
-Travello started out by selling their own products (like experiences/tours/events) for a while. They became quite successful and they decided to integrate with 3rd party providers to expand their range of products.
-
-Here you are expected to write a minimal working API for the business.
-
-We have bootstrapped the project in a Laravel enviorment.
-This is the initial [database schema](https://dbdiagram.io/d/630380baf1a9b01b0fbb25ca).
-
-## Tasks
-
-### 1. Search API
-
-First you are expected to deliver Travello products through the search API:
-
--   Accessible by `GET /search` route.
--   Only **available** products should be shown.
--   Optionally filter by `startDate` and `endDate`. Default is 2 weeks from today.
-
-Sample response structure:
-
-```json
-[
-    {
-        "title": "Desert Safari",
-        "minimumPrice": "250.0 AED",
-        "thumbnail": "https://picsum.photos/300/200"
-    }
-]
-```
-
-### 2. Integration
-
-Now you are in charge of the integration. This is the primary focus of this challenge.
-
-The idea is to have **transparent** integration with the ever-increasing list of providers.  
-By transparent, we mean the Search API always presents the same response structure [as detailed above] for all sort of products.
-
-#### Provider
-
-Here is a fictional provider you need to integrate with:
-
-1. Heavenly Tours ([API Docs](https://documenter.getpostman.com/view/24789999/2s8Z6zyrnn))
-
-## Delivery
-
-1. Clone this repository under your own git namespace.
-2. Write us _your_ best code.
-3. Send us the link to the repository.
-
-We appreciate your time and effort in advance. Good luck!
+## Reasoning
+Real-Time Search Limitations:
+The online search method is not optimal for these types of providers due to the nature of their API, which does not support immediate results.
+Given the absence of detailed documentation on real-time search functionality, this approach has been deemed necessary.
