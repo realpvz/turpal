@@ -4,14 +4,30 @@ namespace App\DataTransferObjects\HeavenlyTours;
 
 class TourDTO
 {
+    private float $price;
+
     public function __construct(
-        private string $id,
-        private string $title,
-        private string $excerpt,
-        private string $city,
+        private readonly string  $id,
+        private readonly string  $title,
+        private readonly string  $excerpt,
+        private readonly string  $city,
+        private readonly ?string $thumbnail = null
     )
     {
     }
+
+    public function setPrice(float $price): self
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    public function getPrice(): float
+    {
+        return $this->price;
+    }
+
 
     public function getId(): string
     {
@@ -32,4 +48,11 @@ class TourDTO
     {
         return $this->city;
     }
+
+    public function getThumbnail(): ?string
+    {
+        return $this->thumbnail;
+    }
+
+
 }

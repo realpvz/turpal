@@ -4,6 +4,7 @@ namespace App\Repositories\Api;
 
 use App\DataTransferObjects\HeavenlyTours\TourDTO;
 use App\Enums\HeavenlyTours\ApiEndpoint;
+use DateTimeInterface;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Http;
 
@@ -24,15 +25,35 @@ class HeavenlyToursApi
             $tour['id'],
             $tour['title'],
             $tour['excerpt'],
-            $tour['city']
+            $tour['city'],
         ), $tours);
     }
 
-    public function getTourPrices(string $tourID): array
+    /**
+     * @throws RequestException
+     */
+    public function getTourPrices(DateTimeInterface $travelDate): array
     {
-        $prices = $this->run(ApiEndpoint::GetAllTourPrices, $tourID);
+        $prices = $this->run(ApiEndpoint::GetAllTourPrices);
 
         return array_combine(array_column($prices, 'tourId'), array_column($prices, 'price'));
+    }
+
+    public function detail(string $tourID): TourDTO
+    {
+        $tourDetail = $this->run(ApiEndpoint::ShowTours, $tourID);
+
+        $thumbnail = array_filter($tourDetail['photos'], function (array $photo) {
+            return $photo['type'] === 'thumbnail';
+        })[0]['url'];
+
+        return new TourDTO(
+            $tourDetail['id'],
+            $tourDetail['title'],
+            $tourDetail['excerpt'],
+            $tourDetail['city'],
+            $thumbnail
+        );
     }
 
     /**
@@ -40,11 +61,11 @@ class HeavenlyToursApi
      */
     public function run(ApiEndpoint $endpoint, string $tourID = null)
     {
-        $endpointValue = $endpoint->isWildcard() ? sprintf($endpoint->isWildcard(), $tourID) : $endpoint->value;
+        $endpointValue = $endpoint->isWildcard() ? sprintf($endpoint->value, $tourID) : $endpoint->value;
 
         $response = Http::baseUrl($this->baseUrl)->withOptions([
             'proxy' => 'http://localhost:8889'
-        ])->timeout(5)->get($endpointValue);
+        ])->get($endpointValue);
 
         $response->throwIf($response->successful());
 
