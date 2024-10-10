@@ -17,6 +17,8 @@ class SearchService implements \App\Contracts\Services\SearchService
     {
         $providers = $this->providerRepository->all();
         $products = [];
+        // we can put the search process into job when we have more providers
+        // to run them parallelism
         foreach ($providers as $provider) {
             $products[] = $provider->search($search);
         }

@@ -2,8 +2,6 @@
 
 namespace App\Repositories\Eloquent;
 
-use App\DataTransferObjects\ProductDTO;
-use App\Enums\Currency;
 use App\Models\Product;
 use App\Models\Search;
 use Illuminate\Database\Eloquent\Builder;

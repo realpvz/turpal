@@ -10,8 +10,8 @@ use App\Transformers\Travello\ProductTransformer;
 class TravelloProvider implements ProviderService
 {
     public function __construct(
-        private readonly ProductRepository $repository,
-        private ProductTransformer $productTransformer,
+        private readonly ProductRepository  $repository,
+        private readonly ProductTransformer $productTransformer,
     )
     {
     }
