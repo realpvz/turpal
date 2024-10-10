@@ -7,19 +7,19 @@ use DateTimeInterface;
 class Search
 {
     public function __construct(
-        private readonly DateTimeInterface $fromDate,
-        private readonly DateTimeInterface $toDate,
+        private readonly DateTimeInterface $startDate,
+        private readonly DateTimeInterface $endDate,
     )
     {
     }
 
-    public function getFromDate(): DateTimeInterface
+    public function getStartDate(): DateTimeInterface
     {
-        return $this->fromDate;
+        return $this->startDate;
     }
 
-    public function getToDate(): DateTimeInterface
+    public function getEndDate(): DateTimeInterface
     {
-        return $this->toDate;
+        return $this->endDate;
     }
 }

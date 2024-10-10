@@ -19,8 +19,8 @@ class AvailabilityFactory extends Factory
     {
         return [
             'product_id' => Product::factory(),
-            'price' => $this->faker->randomFloat(),
-            'start_time' => now()->toDateTimeString(),
+            'price' => $this->faker->randomFloat(max: 8),
+            'start_time' => now()->addDay()->toDateTimeString(),
             'end_time' => now()->addWeek()->toDateTimeString(),
         ];
     }

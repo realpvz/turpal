@@ -2,7 +2,9 @@
 
 namespace App\Contracts\Services;
 
+use App\Models\Search;
+
 interface SearchService
 {
-    public function search();
+    public function search(Search $search);
 }

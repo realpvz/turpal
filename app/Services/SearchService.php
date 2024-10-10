@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Contracts\Repositories\ProviderRepository;
+use App\Models\Search;
 
 class SearchService implements \App\Contracts\Services\SearchService
 {
@@ -12,12 +13,14 @@ class SearchService implements \App\Contracts\Services\SearchService
     {
     }
 
-    public function search()
+    public function search(Search $search): array
     {
         $providers = $this->providerRepository->all();
-
+        $products = [];
         foreach ($providers as $provider) {
-            dd($provider);
+            $products[] = $provider->search($search);
         }
+
+        return array_merge(...$products);
     }
 }

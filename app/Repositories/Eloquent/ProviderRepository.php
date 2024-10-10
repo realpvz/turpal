@@ -17,14 +17,8 @@ class ProviderRepository implements ProviderRepositoryContract
     public function all(): array
     {
         // when we put providers into database
-        // return  $this->model->newQuery()->get()->map(function (Provider $provider) {
-        // return $provider->getServiceInstance();
-        // })->toArray();
-
-        // mock
-
-        return [
-            app(HeavenlyToursApi::class),
-        ];
+        return $this->model->newQuery()->get()->map(function (Provider $provider) {
+            return $provider->getServiceInstance();
+        })->toArray();
     }
 }

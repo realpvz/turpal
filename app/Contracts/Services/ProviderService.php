@@ -2,10 +2,9 @@
 
 namespace App\Contracts\Services;
 
+use App\Models\Search;
+
 interface ProviderService
 {
-
-    public function tours(): array;
-
-    public function getToursAvailability(string $tourID);
+    public function search(Search $search): array;
 }
